@@ -1,0 +1,47 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/user-service/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "PATCH", "PUT" ],
+      "ServiceName": "user-service",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin" //轮询
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ], //白名单，不受限流控制。
+        "EnableRateLimiting": true, //启用限流
+        "Period": "5s", //限流控制的时间段 1s, 5m, 1h, 1d。
+        "PeriodTimespan": 1, //超过限流限制的次数后,需要等待重置的时间（单位是秒）。
+        "Limit": 10 //在限流控制时间段内最大访问数。
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://192.168.1.103:7000",
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "192.168.1.103",
+      "Port": "8500",
+      "ConfigurationKey": "Consul"
+    },
+    //负载均衡
+    "LoadBalancerOptions": {
+      "Type": "RoundRobin",
+      "Key": null,
+      "Expiry": 0
+    },
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false, // Http头  X-Rate-Limit 和 Retry-After 是否禁用
+      "QuotaExceededMessage": "Too many requests", // 当请求过载被截断时返回的消息
+      "HttpStatusCode": 429, // 当请求过载被截断时返回的http status
+      "ClientIdHeader": "client_id" // 用来识别客户端的请求头，默认是 ClientId
+    },
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 3, // 允许多少个异常请求
+      "DurationOfBreak": 10000, // 熔断的时间，单位为毫秒
+      "TimeoutValue": 5000 // 如果下游请求的处理时间超过多少则视如该请求超时
+    }
+  }
+}
