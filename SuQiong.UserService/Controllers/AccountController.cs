@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using SuQiong.Domain.Service;
 using SuQiong.EntityFrameworkCore.Context;
 using SuQiong.EntityFrameworkCore.Model;
-using SuQiong.Models.Options;
+using SuQiong.Domain.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

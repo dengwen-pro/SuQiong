@@ -1,6 +1,6 @@
 ﻿using System;
 using Consul;
-using SuQiong.Models.Options;
+using SuQiong.Domain.Models.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 

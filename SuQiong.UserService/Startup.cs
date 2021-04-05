@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using SuQiong.Models.Options;
+using SuQiong.Domain.Models.Options;
 using SuQiong.Application.Extensions;
 using SuQiong.EntityFrameworkCore.Context;
 using Microsoft.AspNetCore.Hosting.Server.Features;

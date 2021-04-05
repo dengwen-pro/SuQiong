@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SuQiong.Domain.Models\SuQiong.Domain.Models.csproj" />
     <ProjectReference Include="..\SuQiong.Domain.Repository\SuQiong.Domain.Repository.csproj" />
     <ProjectReference Include="..\SuQiong.Domain.Services\SuQiong.Domain.Service.csproj" />
     <ProjectReference Include="..\SuQiong.Repository\SuQiong.Repository.csproj" />

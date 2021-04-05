@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SuQiong.Application.Extensions;
 using SuQiong.EntityFrameworkCore.Context;
-using SuQiong.Models.Options;
+using SuQiong.Domain.Models.Options;
 
 namespace SuQiong.ProductService
 {
