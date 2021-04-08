@@ -14,6 +14,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SuQiong.Application.Extensions;
 using SuQiong.EntityFrameworkCore.Context;
 using SuQiong.Domain.Models.Options;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace SuQiong.ProductService
 {
@@ -74,10 +75,25 @@ namespace SuQiong.ProductService
             app.UseAuthentication();    //认证服务
             app.UseAuthorization();     //使用授权服务
 
-            //服务注册
+            #region Consul服务注册
+            //获取当前绑定域名
+            var bindingUrl = app.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First();
+            Console.WriteLine("bindingUrl:" + bindingUrl);
+            if (bindingUrl.Contains("+"))
+            {
+                //docker环境从环境变量获取,docker-compose启动时会设置该值
+                bindingUrl = Environment.GetEnvironmentVariable("ServiceUrl", EnvironmentVariableTarget.Process);
+                Console.WriteLine("environmentVariable:" + bindingUrl);
+            }
+
+            var u = new Uri(bindingUrl);
             var consulOption = new ConsulOption();
             Configuration.Bind(nameof(ConsulOption), consulOption);
+            consulOption.ServiceHealthCheck = bindingUrl + "/healthCheck";
+            consulOption.ServiceIP = u.Host;
+            consulOption.ServicePort = u.Port;
             app.UseConusl(hostApplicationLifetime, consulOption);
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {

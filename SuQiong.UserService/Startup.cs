@@ -19,6 +19,7 @@ using Autofac;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using SuQiong.Application;
+using System.Net;
 
 namespace SuQiong.UserService
 {
@@ -82,6 +83,13 @@ namespace SuQiong.UserService
             //获取当前绑定域名
             var bindingUrl = app.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First();
             Console.WriteLine("bindingUrl:" + bindingUrl);
+            if (bindingUrl.Contains("+"))
+            {
+                //docker环境从环境变量获取,docker-compose启动时会设置该值
+                bindingUrl = Environment.GetEnvironmentVariable("ServiceUrl", EnvironmentVariableTarget.Process);
+                Console.WriteLine("environmentVariable:" + bindingUrl);
+            }
+
             var u = new Uri(bindingUrl);
             var consulOption = new ConsulOption();
             Configuration.Bind(nameof(ConsulOption), consulOption);

@@ -26,18 +26,17 @@ namespace SuQiong.UserService
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
+                        //添加环境变量
+                        config.AddEnvironmentVariables();
+
                         config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                        //使用Consul配置中心,动态获取应用配置
                         hostingContext.Configuration = config.Build();
-                        //var argsDic = new Dictionary<string, string>();
-                        //for (int i = 0; i < args.Length; i += 2)
-                        //    argsDic.Add(args[i], args[i + 1]);
-                        //string consulConfigName = argsDic.TryGetValue("--consulConfigName", out string value) ? value : hostingContext.Configuration["ConsulConfigName"];
-                        //Console.WriteLine("consulConfigName:" + consulConfigName);
                         string consulUrl = hostingContext.Configuration["ConsulUrl"];
                         string consulConfigName = hostingContext.Configuration["ConsulConfigName"];
                         Console.WriteLine(string.Concat("consulUrl:", consulUrl, "\n", "consulConfigName:", consulConfigName));
+
+                        //添加Consul配置中心
                         config.AddConsul(
                                     consulConfigName,
                                     options =>

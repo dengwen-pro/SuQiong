@@ -69,7 +69,16 @@ namespace SuQiong.UserService.Controllers
         [Route("v1/users")]
         public async Task<IActionResult> GetUserInfo()
         {
-            var users = await _userService.Select();
+            //for (int i = 2; i <= 11; i++)
+            //{
+            //    await _userService.Insert(new User()
+            //    {
+            //        UserId = i,
+            //        UserName = "dengwen" + i,
+            //        Password = "123456"
+            //    }); ;
+            //}
+            var users = await _userService.Select(10, 2, x => true, x => x.UserId, true);
             return await Task.FromResult(Ok(users));
         }
     }

@@ -24,13 +24,19 @@ namespace SuQiong.ProductService
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
+                        //添加环境变量
+                        config.AddEnvironmentVariables();
+
                         config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                        //使用Consul配置中心,动态获取应用配置
                         hostingContext.Configuration = config.Build();
                         string consulUrl = hostingContext.Configuration["ConsulUrl"];
+                        string consulConfigName = hostingContext.Configuration["ConsulConfigName"];
+                        Console.WriteLine(string.Concat("consulUrl:", consulUrl, "\n", "consulConfigName:", consulConfigName));
+
+                        //添加Consul配置中心
                         config.AddConsul(
-                                    $"product-service/appsettings.json",
+                                    consulConfigName,
                                     options =>
                                     {
                                         options.Optional = true;
