@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://192.168.1.103:6001",
+      "applicationUrl": "http://192.168.1.104:6001",
       "sslPort": 0
     }
   },
@@ -21,7 +21,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": ".well-known/openid-configuration",
-      "applicationUrl": "http://192.168.1.103:6001",
+      "applicationUrl": "http://192.168.1.104:6001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://192.168.1.103:8001",
+      "applicationUrl": "http://192.168.1.104:8001",
       "sslPort": 0
     }
   },
@@ -14,16 +14,18 @@
       "launchBrowser": true,
       "launchUrl": "v1/account",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "SkyAPM.Agent.AspNetCore"
       }
     },
     "SuQiong.UserService": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "v1/account",
-      "applicationUrl": "http://192.168.1.103:8001",
+      "applicationUrl": "http://192.168.1.104:8001",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "SkyAPM.Agent.AspNetCore"
       }
     }
   }

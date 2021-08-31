@@ -7,22 +7,39 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Delete", "PATCH", "PUT" ],
       "ServiceName": "user-service",
       "LoadBalancerOptions": {
-        "Type": "RoundRobin" //轮询
+        "Type": "RoundRobin" //RoundRobin：轮询机制  LeastConnection：最少连接数，跟踪发现现在有最少请求或处理的可用服务  NoLoadBalancer：不使用负载均衡，直接访问config配置或者服务发现的第一个可用服务
       },
       "RateLimitOptions": {
-        "ClientWhitelist": [ "127.0.0.1" ], //白名单，不受限流控制。
+        "ClientWhitelist": [], //白名单，不受限流控制。
         "EnableRateLimiting": true, //启用限流
         "Period": "5s", //限流控制的时间段 1s, 5m, 1h, 1d。
-        "PeriodTimespan": 1, //超过限流限制的次数后,需要等待重置的时间（单位是秒）。
+        "PeriodTimespan": 3, //超过限流限制的次数后,需要等待重置的时间（单位是秒）。
+        "Limit": 10 //在限流控制时间段内最大访问数。
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/product-service/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "PATCH", "PUT" ],
+      "ServiceName": "product-service",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin" //RoundRobin：轮询机制  LeastConnection：最少连接数，跟踪发现现在有最少请求或处理的可用服务  NoLoadBalancer：不使用负载均衡，直接访问config配置或者服务发现的第一个可用服务
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [], //白名单，不受限流控制。
+        "EnableRateLimiting": true, //启用限流
+        "Period": "5s", //限流控制的时间段 1s, 5m, 1h, 1d。
+        "PeriodTimespan": 3, //超过限流限制的次数后,需要等待重置的时间（单位是秒）。
         "Limit": 10 //在限流控制时间段内最大访问数。
       }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://192.168.1.103:7000",
+    "BaseUrl": "http://192.168.1.104:7000",
     "ServiceDiscoveryProvider": {
       "Scheme": "http",
-      "Host": "192.168.1.103",
+      "Host": "192.168.1.104",
       "Port": "8500",
       "ConfigurationKey": "Consul"
     },

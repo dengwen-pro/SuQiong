@@ -81,5 +81,23 @@ namespace SuQiong.UserService.Controllers
             var users = await _userService.Select(10, 2, x => true, x => x.UserId, true);
             return await Task.FromResult(Ok(users));
         }
+
+        [Route("v1/goods")]
+        public async Task<string> GetGoods()
+        {
+            var httpClient = new HttpClient();
+            using (var consul = new Consul.ConsulClient(c =>
+            {
+                c.Address = new Uri("http://192.168.1.104:8500");
+            }))
+            {
+                var services = consul.Agent.Services().Result.Response.Values.Where(p => p.Service.Equals("product-service", StringComparison.OrdinalIgnoreCase)); ;
+                Random rand = new Random();
+                var index = rand.Next(services.Count());
+                var s = services.ElementAt(index);
+                return await httpClient.GetStringAsync($"http://{s.Address}:{s.Port}/healthCheck");
+            }
+
+        }
     }
 }

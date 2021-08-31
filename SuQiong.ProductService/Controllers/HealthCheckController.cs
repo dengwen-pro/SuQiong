@@ -13,7 +13,7 @@ namespace SuQiong.ProductService.Controllers
         [Route("healthCheck")]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok(HttpContext.Request.Host);
         }
     }
 }
